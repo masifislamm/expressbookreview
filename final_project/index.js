@@ -1,11 +1,15 @@
 const express = require('express');
 const jwt = require('jsonwebtoken');
 const session = require('express-session');
+const path = require('path');
 const customer_routes = require('./router/auth_users.js').authenticated;
 const genl_routes = require('./router/general.js').general;
 
 const app = express();
 app.use(express.json());
+
+// Serve static files (for test.html)
+app.use(express.static(path.join(__dirname)));
 
 // Session config for customer routes
 app.use("/customer", session({

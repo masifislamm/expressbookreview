@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Express Book Reviews - Test All 13 Tasks</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            padding: 30px;
+        }
+        h1 {
+            color: #667eea;
+            text-align: center;
+            margin-bottom: 10px;
+            font-size: 2.5em;
+        }
+        .subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 1.2em;
+        }
+        .score {
+            text-align: center;
+            font-size: 3em;
+            color: #764ba2;
+            font-weight: bold;
+            margin: 20px 0;
+        }
+        .section {
+            margin-bottom: 30px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            padding: 20px;
+            background: #f9f9f9;
+        }
+        .section-title {
+            color: #764ba2;
+            font-size: 1.5em;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .task {
+            background: white;
+            margin: 10px 0;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid #667eea;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .task-info {
+            flex: 1;
+        }
+        .task-name {
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 5px;
+        }
+        .task-points {
+            color: #764ba2;
+            font-size: 0.9em;
+        }
+        .task-status {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+        button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: transform 0.2s;
+        }
+        button:hover {
+            transform: scale(1.05);
+        }
+        button:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+        .status-icon {
+            font-size: 1.5em;
+        }
+        .success { color: #4caf50; }
+        .pending { color: #ff9800; }
+        .error { color: #f44336; }
+        .result {
+            margin-top: 10px;
+            padding: 10px;
+            background: #f0f0f0;
+            border-radius: 5px;
+            font-size: 0.9em;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+        .auth-form {
+            display: flex;
+            gap: 10px;
+            margin: 15px 0;
+            flex-wrap: wrap;
+        }
+        .auth-form input {
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            flex: 1;
+            min-width: 150px;
+        }
+        #runAllBtn {
+            width: 100%;
+            padding: 15px;
+            font-size: 1.2em;
+            margin: 20px 0;
+        }
+        .progress {
+            text-align: center;
+            font-size: 1.2em;
+            color: #667eea;
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📚 Express Book Reviews</h1>
+        <div class="subtitle">Testing All 13 Tasks - Final Project (30 Points)</div>
+        <div class="score" id="score">0 / 30 Points</div>
+        
+        <button id="runAllBtn" onclick="runAllTests()">🚀 Run All Tests</button>
+        
+        <div class="progress" id="progress"></div>
+
+        <!-- General Users Section -->
+        <div class="section">
+            <div class="section-title">👥 General Users (10 Points)</div>
+            
+            <div class="task" id="task1">
+                <div class="task-info">
+                    <div class="task-name">Task 1: Get all books</div>
+                    <div class="task-points">2 Points</div>
+                </div>
+                <div class="task-status">
+                    <span class="status-icon pending">⏳</span>
+                    <button onclick="testTask1()">Test</button>
+                </div>
+            </div>
+            
+            <div class="task" id="task2">
+                <div class="task-info">
+                    <div class="task-name">Task 2: Get book by ISBN</div>
+                    <div class="task-points">2 Points</div>
+                </div>
+                <div class="task-status">
+                    <span class="status-icon pending">⏳</span>
+                    <button onclick="testTask2()">Test</button>
+                </div>
+            </div>
+            
+            <div class="task" id="task3">
+                <div class="task-info">
+                    <div class="task-name">Task 3: Get books by Author</div>
+                    <div class="task-points">2 Points</div>
+                </div>
+                <div class="task-status">
+                    <span class="status-icon pending">⏳</span>
+                    <button onclick="testTask3()">Test</button>
+                </div>
+            </div>
+            
+            <div class="task" id="task4">
+                <div class="task-info">
+                    <div class="task-name">Task 4: Get books by Title</div>
+                    <div class="task-points">2 Points</div>
+                </div>
+                <div class="task-status">
+                    <span class="status-icon pending">⏳</span>
+                    <button onclick="testTask4()">Test</button>
+                </div>
+            </div>
+            
+            <div class="task" id="task5">
+                <div class="task-info">
+                    <div class="task-name">Task 5: Get book reviews</div>
+                    <div class="task-points">2 Points</div>
+                </div>
+                <div class="task-status">
+                    <span class="status-icon pending">⏳</span>
+                    <button onclick="testTask5()">Test</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Registration & Login Section -->
+        <div class="section">
+            <div class="section-title">🔐 User Registration & Login (6 Points)</div>
+            
+            <div class="auth-form">
+                <input type="text" id="username" placeholder="Username" value="testuser123">
+                <input type="password" id="password" placeholder="Password" value="password123">
+            </div>
+            
+            <div class="task" id="task6">
+                <div class="task-info">
+                    <div class="task-name">Task 6: Register new user</div>
+                    <div class="task-points">3 Points</div>
+                </div>
+                <div class="task-status">
+                    <span class="status-icon pending">⏳</span>
+                    <button onclick="testTask6()">Test</button>
+                </div>
+            </div>
+            
+            <div class="task" id="task7">
+                <div class="task-info">
+                    <div class="task-name">Task 7: Login as registered user</div>
+                    <div class="task-points">3 Points</div>
+                </div>
+                <div class="task-status">
+                    <span class="status-icon pending">⏳</span>
+                    <button onclick="testTask7()">Test</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Registered Users Section -->
+        <div class="section">
+            <div class="section-title">✍️ Registered Users (4 Points)</div>
+            
+            <div class="task" id="task8">
+                <div class="task-info">
+                    <div class="task-name">Task 8: Add/Modify book review</div>
+                    <div class="task-points">2 Points</div>
+                </div>
+                <div class="task-status">
+                    <span class="status-icon pending">⏳</span>
+                    <button onclick="testTask8()">Test</button>
+                </div>
+            </div>
+            
+            <div class="task" id="task9">
+                <div class="task-info">
+                    <div class="task-name">Task 9: Delete book review</div>
+                    <div class="task-points">2 Points</div>
+                </div>
+                <div class="task-status">
+                    <span class="status-icon pending">⏳</span>
+                    <button onclick="testTask9()">Test</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Async/Promises Section -->
+        <div class="section">
+            <div class="section-title">🔄 Async/Promises with Axios (10 Points)</div>
+            
+            <div class="task" id="task10">
+                <div class="task-info">
+                    <div class="task-name">Task 10: Get all books (async callback)</div>
+                    <div class="task-points">2 Points</div>
+                </div>
+                <div class="task-status">
+                    <span class="status-icon pending">⏳</span>
+                    <button onclick="testTask10()">Test</button>
+                </div>
+            </div>
+            
+            <div class="task" id="task11">
+                <div class="task-info">
+                    <div class="task-name">Task 11: Search by ISBN (Promises)</div>
+                    <div class="task-points">2 Points</div>
+                </div>
+                <div class="task-status">
+                    <span class="status-icon pending">⏳</span>
+                    <button onclick="testTask11()">Test</button>
+                </div>
+            </div>
+            
+            <div class="task" id="task12">
+                <div class="task-info">
+                    <div class="task-name">Task 12: Search by Author (async)</div>
+                    <div class="task-points">2 Points</div>
+                </div>
+                <div class="task-status">
+                    <span class="status-icon pending">⏳</span>
+                    <button onclick="testTask12()">Test</button>
+                </div>
+            </div>
+            
+            <div class="task" id="task13">
+                <div class="task-info">
+                    <div class="task-name">Task 13: Search by Title (async)</div>
+                    <div class="task-points">2 Points</div>
+                </div>
+                <div class="task-status">
+                    <span class="status-icon pending">⏳</span>
+                    <button onclick="testTask13()">Test</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const BASE_URL = 'http://localhost:5000';
+        let totalPoints = 0;
+        let sessionCookie = '';
+
+        function updateScore(points) {
+            totalPoints += points;
+            document.getElementById('score').textContent = `${totalPoints} / 30 Points`;
+        }
+
+        function updateTaskStatus(taskId, success, message, points) {
+            const task = document.getElementById(taskId);
+            const icon = task.querySelector('.status-icon');
+            icon.className = `status-icon ${success ? 'success' : 'error'}`;
+            icon.textContent = success ? '✅' : '❌';
+            
+            if (success) {
+                updateScore(points);
+            }
+            
+            // Show result
+            let resultDiv = task.querySelector('.result');
+            if (!resultDiv) {
+                resultDiv = document.createElement('div');
+                resultDiv.className = 'result';
+                task.querySelector('.task-info').appendChild(resultDiv);
+            }
+            resultDiv.innerHTML = `<strong>${success ? 'Success' : 'Error'}:</strong> ${message}`;
+        }
+
+        async function testTask1() {
+            try {
+                const response = await fetch(`${BASE_URL}/`);
+                const data = await response.json();
+                updateTaskStatus('task1', response.ok, `Found ${Object.keys(data).length} books`, 2);
+            } catch (error) {
+                updateTaskStatus('task1', false, error.message, 0);
+            }
+        }
+
+        async function testTask2() {
+            try {
+                const response = await fetch(`${BASE_URL}/isbn/9780007350803`);
+                const data = await response.json();
+                updateTaskStatus('task2', response.ok, `Book: ${data.title} by ${data.author}`, 2);
+            } catch (error) {
+                updateTaskStatus('task2', false, error.message, 0);
+            }
+        }
+
+        async function testTask3() {
+            try {
+                const response = await fetch(`${BASE_URL}/author/J.R.R. Tolkien`);
+                const data = await response.json();
+                updateTaskStatus('task3', response.ok, `Found ${data.length} book(s) by J.R.R. Tolkien`, 2);
+            } catch (error) {
+                updateTaskStatus('task3', false, error.message, 0);
+            }
+        }
+
+        async function testTask4() {
+            try {
+                const response = await fetch(`${BASE_URL}/title/1984`);
+                const data = await response.json();
+                updateTaskStatus('task4', response.ok, `Found ${data.length} book(s) with title "1984"`, 2);
+            } catch (error) {
+                updateTaskStatus('task4', false, error.message, 0);
+            }
+        }
+
+        async function testTask5() {
+            try {
+                const response = await fetch(`${BASE_URL}/review/9780007350803`);
+                const data = await response.json();
+                updateTaskStatus('task5', response.ok, `Reviews: ${JSON.stringify(data)}`, 2);
+            } catch (error) {
+                updateTaskStatus('task5', false, error.message, 0);
+            }
+        }
+
+        async function testTask6() {
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            try {
+                const response = await fetch(`${BASE_URL}/customer/register`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ username, password })
+                });
+                const data = await response.json();
+                updateTaskStatus('task6', response.ok, data.message, 3);
+            } catch (error) {
+                updateTaskStatus('task6', false, error.message, 0);
+            }
+        }
+
+        async function testTask7() {
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            try {
+                const response = await fetch(`${BASE_URL}/customer/login`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    credentials: 'include',
+                    body: JSON.stringify({ username, password })
+                });
+                const data = await response.json();
+                if (response.ok) {
+                    sessionCookie = response.headers.get('set-cookie') || 'session_stored';
+                }
+                updateTaskStatus('task7', response.ok, `${data.message} - Token received`, 3);
+            } catch (error) {
+                updateTaskStatus('task7', false, error.message, 0);
+            }
+        }
+
+        async function testTask8() {
+            try {
+                const response = await fetch(`${BASE_URL}/customer/auth/review/9780007350803?review=Amazing%20book!%20A%20timeless%20classic.`, {
+                    method: 'PUT',
+                    credentials: 'include'
+                });
+                const data = await response.json();
+                updateTaskStatus('task8', response.ok, data.message, 2);
+            } catch (error) {
+                updateTaskStatus('task8', false, error.message, 0);
+            }
+        }
+
+        async function testTask9() {
+            try {
+                const response = await fetch(`${BASE_URL}/customer/auth/review/9780007350803`, {
+                    method: 'DELETE',
+                    credentials: 'include'
+                });
+                const data = await response.json();
+                updateTaskStatus('task9', response.ok, data.message, 2);
+            } catch (error) {
+                updateTaskStatus('task9', false, error.message, 0);
+            }
+        }
+
+        async function testTask10() {
+            try {
+                const response = await fetch(`${BASE_URL}/async/books`);
+                const data = await response.json();
+                updateTaskStatus('task10', response.ok, `Async call successful - ${Object.keys(data).length} books`, 2);
+            } catch (error) {
+                updateTaskStatus('task10', false, error.message, 0);
+            }
+        }
+
+        async function testTask11() {
+            try {
+                const response = await fetch(`${BASE_URL}/async/isbn/9780439064873`);
+                const data = await response.json();
+                updateTaskStatus('task11', response.ok, `Promise-based search: ${data.title}`, 2);
+            } catch (error) {
+                updateTaskStatus('task11', false, error.message, 0);
+            }
+        }
+
+        async function testTask12() {
+            try {
+                const response = await fetch(`${BASE_URL}/async/author/George Orwell`);
+                const data = await response.json();
+                updateTaskStatus('task12', response.ok, `Async author search: ${data.length} book(s)`, 2);
+            } catch (error) {
+                updateTaskStatus('task12', false, error.message, 0);
+            }
+        }
+
+        async function testTask13() {
+            try {
+                const response = await fetch(`${BASE_URL}/async/title/Harry Potter and the Chamber of Secrets`);
+                const data = await response.json();
+                updateTaskStatus('task13', response.ok, `Async title search: ${data.length} book(s)`, 2);
+            } catch (error) {
+                updateTaskStatus('task13', false, error.message, 0);
+            }
+        }
+
+        async function runAllTests() {
+            totalPoints = 0;
+            document.getElementById('score').textContent = '0 / 30 Points';
+            document.getElementById('progress').textContent = '🔄 Running all tests...';
+            
+            // Reset all icons
+            document.querySelectorAll('.status-icon').forEach(icon => {
+                icon.className = 'status-icon pending';
+                icon.textContent = '⏳';
+            });
+            
+            // Remove all result divs
+            document.querySelectorAll('.result').forEach(r => r.remove());
+
+            // Run tests sequentially
+            await testTask1();
+            await new Promise(r => setTimeout(r, 500));
+            await testTask2();
+            await new Promise(r => setTimeout(r, 500));
+            await testTask3();
+            await new Promise(r => setTimeout(r, 500));
+            await testTask4();
+            await new Promise(r => setTimeout(r, 500));
+            await testTask5();
+            await new Promise(r => setTimeout(r, 500));
+            await testTask6();
+            await new Promise(r => setTimeout(r, 500));
+            await testTask7();
+            await new Promise(r => setTimeout(r, 500));
+            await testTask8();
+            await new Promise(r => setTimeout(r, 500));
+            await testTask9();
+            await new Promise(r => setTimeout(r, 500));
+            await testTask10();
+            await new Promise(r => setTimeout(r, 500));
+            await testTask11();
+            await new Promise(r => setTimeout(r, 500));
+            await testTask12();
+            await new Promise(r => setTimeout(r, 500));
+            await testTask13();
+            
+            document.getElementById('progress').textContent = `✅ All tests completed! Final Score: ${totalPoints}/30`;
+        }
+    </script>
+</body>
+</html>

@@ -83,9 +83,7 @@ public_users.get('/async/isbn/:isbn', (req, res) => {
   axios.get(`http://localhost:5000/isbn/${isbn}`)
     .then(response => res.status(200).send(response.data))
     .catch(err => res.status(500).json({ message: "Error fetching book by ISBN" }));
-});
-  }
-});
+  });
 
 // Task 12 - Get by Author (async)
 public_users.get('/async/author/:author', async (req, res) => {
